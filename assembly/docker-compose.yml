@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  growthNote_list_mysql:
+    image: mysql:5.7.18
+    ports:
+      - 13308:3306
+    container_name: growthNote_list_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: GrowthNoteList
+      MYSQL_USER: GrowthNoteList
+      MYSQL_PASSWORD: 12345678
