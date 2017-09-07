@@ -46,13 +46,7 @@ public class GrowthNoteService {
 
         GrowthNote lastGrowthNote = getLastGrowthNote(author, rawId);
 
-        GrowthNote newGrowthNote = new GrowthNote();
-        newGrowthNote.setCreateTime(lastGrowthNote.getCreateTime());
-        newGrowthNote.setDate(lastGrowthNote.getDate());
-        newGrowthNote.setAuthor(lastGrowthNote.getAuthor());
-        newGrowthNote.setRawId(lastGrowthNote.getRawId());
-        newGrowthNote.setTitle(lastGrowthNote.getTitle());
-        newGrowthNote.setContent(lastGrowthNote.getContent());
+        GrowthNote newGrowthNote = getGrowthNote(lastGrowthNote);
         newGrowthNote.setOperationType(GrowthNote.OperationType.DELETE);
 
         newGrowthNote = growthNoteRepository.save(newGrowthNote);
@@ -61,14 +55,9 @@ public class GrowthNoteService {
         return body;
     }
 
+
     public Map<String, String> create(GrowthNote growthNote, int author) {
-        GrowthNote newGrowthNote = new GrowthNote();
-        newGrowthNote.setCreateTime(growthNote.getCreateTime());
-        newGrowthNote.setDate(growthNote.getDate());
-        newGrowthNote.setAuthor(growthNote.getAuthor());
-        newGrowthNote.setRawId(growthNote.getRawId());
-        newGrowthNote.setTitle(growthNote.getTitle());
-        newGrowthNote.setContent(growthNote.getContent());
+        GrowthNote newGrowthNote = getGrowthNote(growthNote);
         newGrowthNote.setOperationType(GrowthNote.OperationType.CREATE);
 
         newGrowthNote = growthNoteRepository.save(newGrowthNote);
@@ -125,6 +114,17 @@ public class GrowthNoteService {
             }
         }
         return lastGrowthNote;
+    }
+
+    private GrowthNote getGrowthNote(GrowthNote lastGrowthNote) {
+        GrowthNote newGrowthNote = new GrowthNote();
+        newGrowthNote.setCreateTime(lastGrowthNote.getCreateTime());
+        newGrowthNote.setDate(lastGrowthNote.getDate());
+        newGrowthNote.setAuthor(lastGrowthNote.getAuthor());
+        newGrowthNote.setRawId(lastGrowthNote.getRawId());
+        newGrowthNote.setTitle(lastGrowthNote.getTitle());
+        newGrowthNote.setContent(lastGrowthNote.getContent());
+        return newGrowthNote;
     }
 
 }
