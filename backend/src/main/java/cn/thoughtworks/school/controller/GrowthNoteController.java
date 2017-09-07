@@ -16,7 +16,7 @@ import java.util.Map;
 public class GrowthNoteController {
 
     @Autowired
-    GrowthNoteService growthNoteService;
+    private GrowthNoteService growthNoteService;
 
 
     @RequestMapping(value = "/{userId}/api/growthNotes", method = RequestMethod.GET)
