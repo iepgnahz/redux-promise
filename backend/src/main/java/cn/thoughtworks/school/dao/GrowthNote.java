@@ -44,10 +44,6 @@ public class GrowthNote {
     }
 
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
