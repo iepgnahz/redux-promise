@@ -20,7 +20,7 @@ INSERT INTO growthNote (id, createTime, date, title, content, rawId, author, ope
 VALUES (7, '2017-09-06 00:00:00', '2017-09-06 00:00:00', 'third update', 'third content update', 3, 1, 'UPDATE');
 
 INSERT INTO growthNote (id, createTime, date, title, content, rawId, author, operationType)
-VALUES (8, '2017-09-07 00:00:00', '2017-09-07 00:00:00', 'third update', 'third content update', 3, 2, 'UPDATE');
+VALUES (8, '2017-09-07 00:00:00', '2017-09-07 00:00:00', 'third update', 'third content update', 3, 1, 'UPDATE');
 
 INSERT INTO growthNote (id, createTime, date, title, content, rawId, author, operationType)
 VALUES (9, '2017-09-02 00:00:00', '2017-09-01 00:00:00', 'second author', 'I am second author!', 1, 2, 'CREATE');
