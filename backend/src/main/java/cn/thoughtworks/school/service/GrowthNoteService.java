@@ -67,4 +67,20 @@ public class GrowthNoteService {
         return body;
     }
 
+    public Map<String, String> create(GrowthNote growthNote, int author) {
+        GrowthNote newGrowthNote = new GrowthNote();
+        newGrowthNote.setCreateTime(growthNote.getCreateTime());
+        newGrowthNote.setDate(growthNote.getDate());
+        newGrowthNote.setAuthor(growthNote.getAuthor());
+        newGrowthNote.setRawId(growthNote.getRawId());
+        newGrowthNote.setTitle(growthNote.getTitle());
+        newGrowthNote.setContent(growthNote.getContent());
+        newGrowthNote.setOperationType(GrowthNote.OperationType.CREATE);
+
+        newGrowthNote = growthNoteRepository.save(newGrowthNote);
+        Map<String, String> body = new HashMap<>();
+        body.put("uri", "/users/" + author + "/api/growthNotes/" + newGrowthNote.getId());
+        return body;
+    }
+
 }
