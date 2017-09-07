@@ -31,7 +31,6 @@ dependencies {
 }
 
 
-
 flyway {
 	url = 'jdbc:mysql://localhost:13308/GrowthNoteList'
 	user = 'GrowthNoteList'
