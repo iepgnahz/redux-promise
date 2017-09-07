@@ -9,4 +9,6 @@ public interface GrowthNoteRepository extends JpaRepository<GrowthNote, Integer>
 
     List<GrowthNote> findByAuthor(int author);
 
+    List<GrowthNote> findByRawIdAndAuthor(int rarId, int author);
+
 }
