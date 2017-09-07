@@ -48,4 +48,10 @@ public class GrowthNoteController {
         Map<String, String> body = growthNoteService.create(growthNote, userId);
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/{userId}/api/growthNotes/{rawId}", method = RequestMethod.PUT)
+    public ResponseEntity<Map<String, String>> update(@PathVariable int userId, @PathVariable int rawId, @RequestBody GrowthNote growthNote) {
+        Map<String, String> body = growthNoteService.update(growthNote, rawId, userId);
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
 }

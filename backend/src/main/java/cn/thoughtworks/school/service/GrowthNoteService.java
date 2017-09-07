@@ -44,13 +44,7 @@ public class GrowthNoteService {
 
     public Map<String, String> delete(int author, int rawId, GrowthNote.OperationType operationType) {
 
-        List<GrowthNote> growthNoteList = growthNoteRepository.findByRawIdAndAuthor(rawId, author);
-        GrowthNote lastGrowthNote = growthNoteList.get(0);
-        for (GrowthNote growthNote : growthNoteList) {
-            if (lastGrowthNote.getCreateTime().compareTo(growthNote.getCreateTime()) < 0) {
-                lastGrowthNote = growthNote;
-            }
-        }
+        GrowthNote lastGrowthNote = getLastGrowthNote(author, rawId);
 
         GrowthNote newGrowthNote = new GrowthNote();
         newGrowthNote.setCreateTime(lastGrowthNote.getCreateTime());
@@ -81,6 +75,56 @@ public class GrowthNoteService {
         Map<String, String> body = new HashMap<>();
         body.put("uri", "/users/" + author + "/api/growthNotes/" + newGrowthNote.getId());
         return body;
+    }
+
+    public Map<String, String> update(GrowthNote updateGrowthNote, int author, int rawId) {
+        GrowthNote lastGrowthNote = getLastGrowthNote(author, rawId);
+        GrowthNote newGrowthNote = new GrowthNote();
+
+        if (updateGrowthNote.getCreateTime() != null){
+            newGrowthNote.setCreateTime(updateGrowthNote.getCreateTime());
+        }else {
+            newGrowthNote.setCreateTime(updateGrowthNote.getCreateTime());
+        }
+
+        if (updateGrowthNote.getDate() != null){
+            newGrowthNote.setDate(updateGrowthNote.getDate());
+        }else {
+            newGrowthNote.setDate(updateGrowthNote.getDate());
+        }
+
+        if (updateGrowthNote.getTitle() != null){
+            newGrowthNote.setTitle(updateGrowthNote.getTitle());
+        }else {
+            newGrowthNote.setTitle(updateGrowthNote.getTitle());
+        }
+
+        if (updateGrowthNote.getContent() != null){
+            newGrowthNote.setContent(updateGrowthNote.getContent());
+        }else {
+            newGrowthNote.setContent(updateGrowthNote.getContent());
+        }
+
+        newGrowthNote.setAuthor(author);
+        newGrowthNote.setRawId(rawId);
+        newGrowthNote.setOperationType(GrowthNote.OperationType.UPDATE);
+
+
+        newGrowthNote = growthNoteRepository.save(newGrowthNote);
+        Map<String, String> body = new HashMap<>();
+        body.put("uri", "/users/" + author + "/api/growthNotes/" + newGrowthNote.getId());
+        return body;
+    }
+
+    private GrowthNote getLastGrowthNote(int author, int rawId) {
+        List<GrowthNote> growthNoteList = growthNoteRepository.findByRawIdAndAuthor(rawId, author);
+        GrowthNote lastGrowthNote = growthNoteList.get(0);
+        for (GrowthNote growthNote : growthNoteList) {
+            if (lastGrowthNote.getCreateTime().compareTo(growthNote.getCreateTime()) < 0) {
+                lastGrowthNote = growthNote;
+            }
+        }
+        return lastGrowthNote;
     }
 
 }
