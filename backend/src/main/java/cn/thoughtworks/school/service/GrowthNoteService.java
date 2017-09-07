@@ -15,9 +15,8 @@ public class GrowthNoteService {
     @Autowired
     GrowthNoteRepository growthNoteRepository;
 
-    Map<Integer, GrowthNote> lastGrowthNote = new HashMap<>();
-
     public List<GrowthNote> getByAuthor(int author) {
+        Map<Integer, GrowthNote> lastGrowthNote = new HashMap<>();
         List<GrowthNote> growthNoteList = growthNoteRepository.findByAuthor(author);
         for (GrowthNote growthNote : growthNoteList) {
             int currentRawId = growthNote.getRawId();
