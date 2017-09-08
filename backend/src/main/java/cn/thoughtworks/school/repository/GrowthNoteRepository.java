@@ -17,4 +17,8 @@ public interface GrowthNoteRepository extends JpaRepository<GrowthNote, Integer>
             "(select max(id) as id from `growthNote` where author = ?1 and rawId = ?2)", nativeQuery = true)
     GrowthNote findByRawIdAndAuthor(int author, int rawId);
 
+    @Query(value = "select * from `growthNote` where id in " +
+            "(select max(id) from `growthNote` where author = ?1)", nativeQuery = true)
+    GrowthNote findLastGrowthNoteByAuthor(int author);
+
 }
