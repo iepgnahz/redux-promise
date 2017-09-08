@@ -11,7 +11,9 @@ export default {
                 })
             })
                 .then(res => {
-                    return res.json();
+                    if (res.ok) {
+                        return res.json();
+                    }
                 })
                 .then(body => {
                     dispatch(this.refreshGrowthNote(body));
