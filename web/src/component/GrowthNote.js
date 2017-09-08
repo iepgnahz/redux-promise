@@ -43,14 +43,7 @@ class GrowthNote extends Component {
                             visible={this.state.visible}
                             title="修改成长日志"
                             onCancel={this.setModalVisible.bind(this, false)}
-                            footer={[
-                                <Button key="back" size="large"
-                                        onClick={this.setModalVisible.bind(this, false)}>Return</Button>,
-                                <Button key="submit" type="primary" size="large"
-                                        onClick={this.submitGrowthNote.bind(this)}>
-                                    Submit
-                                </Button>,
-                            ]}
+                            footer={null}
                         >
                             <GrowthNoteEditorBody growthNote={growthNote}
                             />

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {DatePicker, Form, Input} from "antd";
+import {DatePicker, Form, Input, Button, Row, Col} from "antd";
 import moment from "moment";
 
 import "antd/dist/antd.css";
@@ -62,6 +62,12 @@ export default class GrowthNoteEditorBody extends Component {
                               onChange={this.handleInputChange.bind(this, 'content')}
                     />
                 </FormItem>
+                <Row>
+                    <Col span={6} offset={19}>
+                        <Button size="small">取消</Button>
+                        <Button type="primary" size="small" ghost>提交</Button>
+                    </Col>
+                </Row>
             </div>
         )
     }
