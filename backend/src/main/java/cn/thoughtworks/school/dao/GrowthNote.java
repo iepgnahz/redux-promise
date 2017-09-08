@@ -11,7 +11,7 @@ public class GrowthNote {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private int id;
+    private Integer id;
 
     @Column
     private String createTime;
@@ -23,10 +23,10 @@ public class GrowthNote {
     private String content;
 
     @Column
-    private int rawId;
+    private Integer rawId;
 
     @Column
-    private int author;
+    private Integer author;
 
     @Column
     private String title;
@@ -56,11 +56,15 @@ public class GrowthNote {
         this.content = content;
     }
 
-    public void setRawId(int rawId) {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setRawId(Integer rawId) {
         this.rawId = rawId;
     }
 
-    public void setAuthor(int author) {
+    public void setAuthor(Integer author) {
         this.author = author;
     }
 
@@ -68,7 +72,7 @@ public class GrowthNote {
         this.title = titile;
     }
 
-    public int getId() {
+    public Integer getId() {
 
         return id;
     }
@@ -85,11 +89,11 @@ public class GrowthNote {
         return content;
     }
 
-    public int getRawId() {
+    public Integer getRawId() {
         return rawId;
     }
 
-    public int getAuthor() {
+    public Integer getAuthor() {
         return author;
     }
 
