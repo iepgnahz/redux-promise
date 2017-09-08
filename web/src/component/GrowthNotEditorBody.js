@@ -20,12 +20,16 @@ const FORM_ITEM_LAYOUT = {
     },
 };
 
+const date = new Date();
+const formatedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+
 export default class GrowthNoteEditorBody extends Component {
     constructor(props) {
         super(props);
         this.state = ({
             title: this.props.growthNote ? this.props.growthNote.title : '',
-            content: this.props.growthNote ? this.props.growthNote.content : ''
+            content: this.props.growthNote ? this.props.growthNote.content : '',
+            date: this.props.growthNote ? this.props.growthNote.date : formatedDate
         })
     }
 
@@ -35,10 +39,13 @@ export default class GrowthNoteEditorBody extends Component {
         this.setState(stateObject);
     }
 
-    render() {
-        const date = new Date();
-        const formatedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+    submitGrowthNote() {
+        const growthNote = Object.assign({}, this.props.growthNote || {}, this.state);
+        const methodName = (this.props.operationType || 'create') + 'GrowthNote';
+        this.props[methodName](growthNote, growthNote.rawId);
+    }
 
+    render() {
         return (
             <div className="growth-note-editor-body-content">
                 <FormItem {...FORM_ITEM_LAYOUT} label="日志标题:">
@@ -52,7 +59,7 @@ export default class GrowthNoteEditorBody extends Component {
                 <FormItem {...FORM_ITEM_LAYOUT} label="日期:">
                     <div className="growth-note-editor-body-item">
                         <DatePicker
-                            defaultValue={moment(this.props.growthNote ? this.props.growthNote.date : '' || formatedDate, DATE_FORMAT)}
+                            defaultValue={moment(this.state.date, DATE_FORMAT)}
                             format={DATE_FORMAT}/>
                     </div>
                 </FormItem>
@@ -63,9 +70,8 @@ export default class GrowthNoteEditorBody extends Component {
                     />
                 </FormItem>
                 <Row>
-                    <Col span={6} offset={19}>
-                        <Button size="small">取消</Button>
-                        <Button type="primary" size="small" ghost>提交</Button>
+                    <Col span={3} offset={21}>
+                        <Button type="primary" size="small" ghost onClick={this.submitGrowthNote.bind(this)}>提交</Button>
                     </Col>
                 </Row>
             </div>

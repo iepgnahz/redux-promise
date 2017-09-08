@@ -46,7 +46,8 @@ class GrowthNote extends Component {
                             footer={null}
                         >
                             <GrowthNoteEditorBody growthNote={growthNote}
-                            />
+                                                  updateGrowthNote={this.props.updateGrowthNote}
+                                                  operationType='update'/>
                         </Modal>
                     </div>
                 </Card>
@@ -58,7 +59,7 @@ class GrowthNote extends Component {
 const mapStateToProps = state => ({growthNotes: state.growthNotes});
 const mapDispatchToProps = dispatch => ({
     deleteGrowthNote: rawId => dispatch(actions.deleteGrowthNote(rawId)),
-    updateGrowthNote: (rawId, growthNote) => dispatch(actions.updateGrowthNote(rawId, growthNote)),
+    updateGrowthNote: (growthNote, rawId) => dispatch(actions.updateGrowthNote(growthNote, rawId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GrowthNote);

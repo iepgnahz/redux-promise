@@ -36,6 +36,24 @@ export default {
                 })
         }
     },
+    createGrowthNote: growthNote => {
+        return dispatch => {
+            fetch(`/api/growthNotes`, {
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Accept': 'application/json'
+                }),
+                body: JSON.stringify(growthNote)
+            }).then(res => {
+                if (res.status === HTTP_CODE.CREATED) {
+                    dispatch(this.refreshGrowthNote());
+                }
+            }).catch(err => {
+                alert(err.stack);
+            })
+        }
+    },
     updateGrowthNote: (rawId, growthNote) => {
         return dispatch => {
             fetch(`/api/growthNotes/${rawId}`, {
