@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/users")
 public class GrowthNoteController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class GrowthNoteController {
     EntityManager entityManager;
 
 
-    @RequestMapping(value = "/{userId}/api/growthNotes", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.GET)
     public ResponseEntity<List<GrowthNote>> getByAuthor(@RequestParam("author") int author) {
         List<GrowthNote> growthNoteList = growthNoteRepository.findByAuthor(author);
         if (0 == growthNoteList.size()){
@@ -33,7 +33,7 @@ public class GrowthNoteController {
         return new ResponseEntity<>(growthNoteList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}/api/growthNotes/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/growthNotes/{id}", method = RequestMethod.GET)
     public ResponseEntity<GrowthNote> getById(@PathVariable int id) {
 
         GrowthNote growthNote = growthNoteRepository.findOne(id);
@@ -43,7 +43,7 @@ public class GrowthNoteController {
         return new ResponseEntity<>(growthNote, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}/api/growthNotes/{rawId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{userId}/growthNotes/{rawId}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String, String>> delete(@PathVariable int userId, @PathVariable int rawId) {
         GrowthNote lastGrowthNote = growthNoteRepository.findByRawIdAndAuthor(userId, rawId);
         entityManager.detach(lastGrowthNote);
@@ -51,25 +51,25 @@ public class GrowthNoteController {
         lastGrowthNote.setId(null);
         lastGrowthNote = growthNoteRepository.save(lastGrowthNote);
         Map<String, String> body = new HashMap<>();
-        body.put("uri", "/users/" + userId + "/api/growthNotes/" + lastGrowthNote.getId());
+        body.put("uri", "/api/users/" + userId + "/growthNotes/" + lastGrowthNote.getId());
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{userId}/api/growthNotes", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> create(@PathVariable int userId,@RequestBody GrowthNote growthNote) {
         growthNote.setId(null);
         growthNote = growthNoteRepository.save(growthNote);
         Map<String, String> body = new HashMap<>();
-        body.put("uri", "/users/" + userId + "/api/growthNotes/" + growthNote.getId());
+        body.put("uri", "/api/users/" + userId + "/growthNotes/" + growthNote.getId());
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{userId}/api/growthNotes", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.PUT)
     public ResponseEntity<Map<String, String>> update(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
         growthNote.setId(null);
         growthNote = growthNoteRepository.save(growthNote);
         Map<String, String> body = new HashMap<>();
-        body.put("uri", "/users/" + userId + "/api/growthNotes/" + growthNote.getId());
+        body.put("uri", "/api/users/" + userId + "/growthNotes/" + growthNote.getId());
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 }
