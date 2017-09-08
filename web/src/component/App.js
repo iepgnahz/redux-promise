@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import GrowthNoteList from "../container/GrowthNoteList";
+import GrowthNoteList from "./GrowthNoteList";
 
 import "../style/App.css";
 

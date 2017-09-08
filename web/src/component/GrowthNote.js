@@ -1,12 +1,14 @@
 import React, {Component} from "react";
+import {connect} from 'react-redux';
 import {Button, Card, Modal} from "antd";
 
 import "antd/dist/antd.css";
 import "../style/GrowthNote.css";
 
 import GrowthNoteEditorBody from "./GrowthNotEditorBody";
+import  actions from '../action/index';
 
-export default class GrowthNote extends Component {
+class GrowthNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,13 +20,12 @@ export default class GrowthNote extends Component {
         this.props.deleteGrowthNote(rawId);
     }
 
-    updateGrowthNote() {
-        this.setState({
-            visible: true
-        })
+    setModalVisible(visible) {
+        this.setState({visible});
     }
 
     submitGrowthNote(rawId, growthNote) {
+        this.setModalVisible(false);
         this.props.updateGrowthNote(rawId, growthNote);
     }
 
@@ -37,13 +38,22 @@ export default class GrowthNote extends Component {
                     <div className="growth-note-operation-button-group">
                         <Button size="small" onClick={this.deleteGrowthNote.bind(this, growthNote.rawId)}>删除日志</Button>
                         <Button type="primary" size="small" ghost
-                                onClick={this.updateGrowthNote.bind(this)}>修改日志</Button>
+                                onClick={this.setModalVisible.bind(this, true)}>修改日志</Button>
                         <Modal
                             visible={this.state.visible}
                             title="修改成长日志"
+                            onCancel={this.setModalVisible.bind(this, false)}
+                            footer={[
+                                <Button key="back" size="large"
+                                        onClick={this.setModalVisible.bind(this, false)}>Return</Button>,
+                                <Button key="submit" type="primary" size="large"
+                                        onClick={this.submitGrowthNote.bind(this)}>
+                                    Submit
+                                </Button>,
+                            ]}
                         >
-                            <GrowthNoteEditorBody
-                                submitGrowthNote={this.submitGrowthNote.bind(this)} {...growthNote}/>
+                            <GrowthNoteEditorBody growthNote={growthNote}
+                            />
                         </Modal>
                     </div>
                 </Card>
@@ -51,4 +61,12 @@ export default class GrowthNote extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({growthNotes: state.growthNotes});
+const mapDispatchToProps = dispatch => ({
+    deleteGrowthNote: rawId => dispatch(actions.deleteGrowthNote(rawId)),
+    updateGrowthNote: (rawId, growthNote) => dispatch(actions.updateGrowthNote(rawId, growthNote)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GrowthNote);
 

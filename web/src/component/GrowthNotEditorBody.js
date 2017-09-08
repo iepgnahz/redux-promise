@@ -9,6 +9,20 @@ const FormItem = Form.Item;
 const {TextArea} = Input;
 
 export default class GrowthNoteEditorBody extends Component {
+    constructor(props) {
+        super(props);
+        this.state = ({
+            title: this.props.growthNote ? this.props.growthNote.title : '',
+            content: this.props.growthNote ? this.props.growthNote.content : ''
+        })
+    }
+
+    handleInputChange(tag, e) {
+        const stateObject = {};
+        stateObject[tag] = e.target.value;
+        this.setState(stateObject);
+    }
+
     render() {
         const dateFormat = 'YYYY/MM/DD';
 
@@ -23,21 +37,31 @@ export default class GrowthNoteEditorBody extends Component {
             },
         };
 
+        const date = new Date();
+        const formatedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+
         return (
             <div className="growth-note-editor-body-content">
                 <FormItem {...formItemLayout} label="日志标题:">
                     <div className="growth-note-editor-body-item">
-                        <Input placeholder="please input your growth name" value={this.props.title}
-                               />
+                        <Input placeholder="please input your growth note name"
+                               value={this.state.title}
+                               onChange={this.handleInputChange.bind(this, 'title')}
+                        />
                     </div>
                 </FormItem>
                 <FormItem {...formItemLayout} label="日期:">
                     <div className="growth-note-editor-body-item">
-                        <DatePicker defaultValue={moment(this.props.date, dateFormat)} format={dateFormat}/>
+                        <DatePicker
+                            defaultValue={moment(this.props.growthNote ? this.props.growthNote.date : '' || formatedDate, dateFormat)}
+                            format={dateFormat}/>
                     </div>
                 </FormItem>
                 <FormItem {...formItemLayout} label="总结内容:">
-                    <TextArea rows={5} value={this.props.content}/>
+                    <TextArea rows={5}
+                              value={this.state.content}
+                              onChange={this.handleInputChange.bind(this, 'content')}
+                    />
                 </FormItem>
             </div>
         )

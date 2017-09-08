@@ -27,7 +27,7 @@ export default {
                 method: HTTP_METHOD.DELETE
             })
                 .then(res => {
-                    if (res.status = HTTP_CODE.NO_CONTENT) {
+                    if (res.status === HTTP_CODE.NO_CONTENT) {
                         dispatch(this.getGrowthNotes());
                     }
                 })

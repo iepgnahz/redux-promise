@@ -1,11 +1,12 @@
 import React, {Component} from "react";
+import {connect} from 'react-redux';
 
-import GrowthNote from "../container/GrowthNote";
+import GrowthNote from "./GrowthNote";
 import GrowthNoteEditor from "./GrowthNoteEditor";
 
 import "antd/dist/antd.css";
 
-export default class GrowthNoteList extends Component {
+class GrowthNoteList extends Component {
     render() {
         return (
             <div>
@@ -18,5 +19,9 @@ export default class GrowthNoteList extends Component {
             </div>
         )
     }
-
 }
+
+const mapStateToProps = state => ({growthNotes: state.growthNotes});
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GrowthNoteList);
