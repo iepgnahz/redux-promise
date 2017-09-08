@@ -25,8 +25,8 @@ public class GrowthNoteController {
 
 
     @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.GET)
-    public ResponseEntity<List<GrowthNote>> getByAuthor(@RequestParam("author") int author) {
-        List<GrowthNote> growthNoteList = growthNoteRepository.findByAuthor(author);
+    public ResponseEntity<List<GrowthNote>> getByAuthor(@PathVariable int userId) {
+        List<GrowthNote> growthNoteList = growthNoteRepository.findByAuthor(userId);
         if (0 == growthNoteList.size()){
             return new ResponseEntity<>(growthNoteList, HttpStatus.NOT_FOUND);
         }
