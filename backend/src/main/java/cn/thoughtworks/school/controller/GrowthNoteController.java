@@ -27,7 +27,7 @@ public class GrowthNoteController {
     @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.GET)
     public ResponseEntity<List<GrowthNote>> getByAuthor(@PathVariable int userId) {
         List<GrowthNote> growthNoteList = growthNoteRepository.findByAuthor(userId);
-        if (0 == growthNoteList.size()){
+        if (0 == growthNoteList.size()) {
             return new ResponseEntity<>(growthNoteList, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(growthNoteList, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class GrowthNoteController {
     public ResponseEntity<GrowthNote> getById(@PathVariable int id) {
 
         GrowthNote growthNote = growthNoteRepository.findOne(id);
-        if (null == growthNote){
+        if (null == growthNote) {
             return new ResponseEntity<>(growthNote, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(growthNote, HttpStatus.OK);
@@ -56,8 +56,12 @@ public class GrowthNoteController {
     }
 
     @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> create(@PathVariable int userId,@RequestBody GrowthNote growthNote) {
+    public ResponseEntity<Map<String, String>> create(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
+        GrowthNote lastGrowthNote = growthNoteRepository.findLastGrowthNoteByAuthor(userId);
         growthNote.setId(null);
+        growthNote.setRawId(lastGrowthNote.getRawId() + 1);
+        growthNote.setOperationType(GrowthNote.OperationType.CREATE);
+        growthNote.setAuthor(userId);
         growthNote = growthNoteRepository.save(growthNote);
         Map<String, String> body = new HashMap<>();
         body.put("uri", "/api/users/" + userId + "/growthNotes/" + growthNote.getId());
