@@ -1,6 +1,6 @@
 CREATE TABLE `growthNote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `createTime` TIMESTAMP,
+  `createTime` TIMESTAMP default current_timestamp,
   `date` TIMESTAMP default current_timestamp,
   `title` VARCHAR(225),
   `content` VARCHAR(225),
