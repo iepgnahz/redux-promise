@@ -6,7 +6,7 @@ import "antd/dist/antd.css";
 import "../style/GrowthNote.css";
 
 import GrowthNoteEditorBody from "./GrowthNotEditorBody";
-import  actions from '../action/index';
+import  * as actions from '../action/index';
 
 class GrowthNote extends Component {
     constructor(props) {
@@ -47,7 +47,9 @@ class GrowthNote extends Component {
                         >
                             <GrowthNoteEditorBody growthNote={growthNote}
                                                   updateGrowthNote={this.props.updateGrowthNote}
-                                                  operationType='update'/>
+                                                  closeModal={this.setModalVisible.bind(this)}
+                                                  operationType='update'
+                            />
                         </Modal>
                     </div>
                 </Card>

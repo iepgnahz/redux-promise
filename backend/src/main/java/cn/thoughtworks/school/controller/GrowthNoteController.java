@@ -52,7 +52,7 @@ public class GrowthNoteController {
         lastGrowthNote = growthNoteRepository.save(lastGrowthNote);
         Map<String, String> body = new HashMap<>();
         body.put("uri", "/api/users/" + userId + "/growthNotes/" + lastGrowthNote.getId());
-        return new ResponseEntity<>(body, HttpStatus.CREATED);
+        return new ResponseEntity<>(body, HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.POST)
@@ -68,12 +68,12 @@ public class GrowthNoteController {
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{userId}/growthNotes/{rawId}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String, String>> update(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
         growthNote.setId(null);
-        growthNote = growthNoteRepository.save(growthNote);
+        growthNote.setOperationType(GrowthNote.OperationType.UPDATE);
+        growthNoteRepository.save(growthNote);
         Map<String, String> body = new HashMap<>();
-        body.put("uri", "/api/users/" + userId + "/growthNotes/" + growthNote.getId());
-        return new ResponseEntity<>(body, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
