@@ -1,8 +1,10 @@
 import HTTP_METHOD from '../constant/httpMethod';
+
 export const get = async (url) => {
     try {
         const res = await fetch(url, {
             method: HTTP_METHOD.GET,
+            credentials:'include',
             headers: new Headers({
                 'Accept': 'application/json;charset=utf-8'
             })
@@ -27,6 +29,7 @@ export const del = async (url) => {
     try {
         const res = await fetch(url, {
             method: HTTP_METHOD.DELETE,
+            credentials:'include'
         });
 
         return {status: res.status}
@@ -40,6 +43,7 @@ export const post = async (url, growthNote) => {
     try {
         const res = await fetch(url, {
             method: HTTP_METHOD.POST,
+            credentials:'include',
             headers: new Headers({
                 'Content-Type': 'application/json;charset=utf-8',
                 'Accept': 'application/json'
@@ -65,6 +69,7 @@ export const update = async (url, growthNote) => {
     try {
         const res = await fetch(url, {
             method: HTTP_METHOD.PUT,
+            credentials:'include',
             headers: new Headers({
                 'Content-Type': 'application/json;charset=utf-8',
                 'Accept': 'application/json'
