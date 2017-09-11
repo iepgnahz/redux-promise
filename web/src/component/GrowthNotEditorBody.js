@@ -40,7 +40,9 @@ export default class GrowthNoteEditorBody extends Component {
     }
 
     submitGrowthNote() {
-        this.props.closeModal(false);
+        if (this.props.operationType === 'update') {
+            this.props.closeModal(false);
+        }
         const growthNote = Object.assign({}, this.props.growthNote || {}, this.state);
         const methodName = (this.props.operationType || 'create') + 'GrowthNote';
         this.props[methodName](growthNote, growthNote.rawId);
