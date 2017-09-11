@@ -24,15 +24,14 @@ public class GrowthNoteController {
     EntityManager entityManager;
 
 
-    @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/growthNotes/my", method = RequestMethod.GET)
     public ResponseEntity<List<GrowthNote>> getByAuthor(@PathVariable int userId) {
         List<GrowthNote> growthNoteList = growthNoteRepository.findByAuthor(userId);
         return new ResponseEntity<>(growthNoteList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}/growthNotes/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/growthNotes/my/{id}", method = RequestMethod.GET)
     public ResponseEntity<GrowthNote> getById(@PathVariable int id) {
-
         GrowthNote growthNote = growthNoteRepository.findOne(id);
         if (null == growthNote) {
             return new ResponseEntity<>(growthNote, HttpStatus.NOT_FOUND);
@@ -40,7 +39,7 @@ public class GrowthNoteController {
         return new ResponseEntity<>(growthNote, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}/growthNotes/{rawId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{userId}/growthNotes/my/{rawId}", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String, String>> delete(@PathVariable int userId, @PathVariable int rawId) {
         GrowthNote lastGrowthNote = growthNoteRepository.findByRawIdAndAuthor(userId, rawId);
         entityManager.detach(lastGrowthNote);
@@ -52,7 +51,7 @@ public class GrowthNoteController {
         return new ResponseEntity<>(body, HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "/{userId}/growthNotes", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}/growthNotes/my", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> create(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
         GrowthNote lastGrowthNote = growthNoteRepository.findLastGrowthNoteByAuthor(userId);
         growthNote.setId(null);
@@ -65,7 +64,7 @@ public class GrowthNoteController {
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{userId}/growthNotes/{rawId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{userId}/growthNotes/my/{rawId}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String, String>> update(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
         growthNote.setId(null);
         growthNote.setOperationType(GrowthNote.OperationType.UPDATE);

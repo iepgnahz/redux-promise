@@ -10,7 +10,7 @@
 .settings
 .springBeans
 
-
+src/main/resources/static/*
 
 ### IntelliJ IDEA ###
 .idea
