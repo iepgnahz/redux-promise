@@ -6,7 +6,7 @@ export const refreshGrowthNote = growthNotes => ({type: 'REFRESH_GROWTH_NOTE', g
 export const getGrowthNotes = () => {
     return dispatch => {
         (async () => {
-            const res = await request.get('/api/my/growthNotes');
+            const res = await request.get('/api/growthNotes/my');
             if (res.status === HTTP_CODE.OK) {
                 dispatch(refreshGrowthNote(res.body))
             }
@@ -17,7 +17,7 @@ export const getGrowthNotes = () => {
 export const deleteGrowthNote = (rawId) => {
     return dispatch => {
         (async () => {
-            const res = await request.del(`/api/my/growthNotes/${rawId}`);
+            const res = await request.del(`/api/growthNotes/my/${rawId}`);
             if (res.status === HTTP_CODE.NO_CONTENT) {
                 dispatch(getGrowthNotes());
             }
@@ -28,7 +28,7 @@ export const deleteGrowthNote = (rawId) => {
 export const createGrowthNote = growthNote => {
     return dispatch => {
         (async () => {
-            const res = await request.post(`/api/my/growthNotes`, growthNote);
+            const res = await request.post(`/api/growthNotes/my`, growthNote);
             if (res.status === HTTP_CODE.CREATED) {
                 dispatch(getGrowthNotes());
             }
@@ -39,7 +39,7 @@ export const createGrowthNote = growthNote => {
 export const updateGrowthNote = (growthNote, rawId) => {
     return dispatch => {
         (async () => {
-            const res = await request.update(`/api/my/growthNotes/${rawId}`, growthNote);
+            const res = await request.update(`/api/growthNotes/my/${rawId}`, growthNote);
             if (res.status === HTTP_CODE.NO_CONTENT) {
                 dispatch(getGrowthNotes());
             }

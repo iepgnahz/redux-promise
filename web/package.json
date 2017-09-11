@@ -15,12 +15,12 @@
     "redux-thunk": "^2.2.0"
   },
   "proxy": {
-    "/api/my": {
+    "/api/growthNotes/my": {
       "target": "http://localhost:8082",
       "secure": false,
       "changeOrigin": true,
       "pathRewrite": {
-        "^/api/my": "/api/users/1"
+        "^/api/growthNotes/my": "/api/users/1/growthNotes"
       }
     }
   },
