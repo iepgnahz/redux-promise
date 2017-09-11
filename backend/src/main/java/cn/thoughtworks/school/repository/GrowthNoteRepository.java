@@ -10,7 +10,7 @@ public interface GrowthNoteRepository extends JpaRepository<GrowthNote, Integer>
 
     @Query(value = "select * from `growthNote` where id in " +
             "(select max(id) from `growthNote` where author = ?1 group by rawId) " +
-            "and operationType in ('CREATE', 'UPDATE')", nativeQuery = true)
+            "and operationType in ('CREATE', 'UPDATE') order by rawId DESC ", nativeQuery = true)
     List<GrowthNote> findByAuthor(int author);
 
     @Query(value = "select * from `growthNote` where id in " +
