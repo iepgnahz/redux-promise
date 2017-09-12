@@ -54,7 +54,6 @@ public class GrowthNoteController {
     @RequestMapping(value = "/{userId}/growthNotes/my", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> create(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
         GrowthNote lastGrowthNote = growthNoteRepository.findLastGrowthNoteByAuthor(userId);
-        growthNote.setId(null);
         growthNote.setRawId(lastGrowthNote.getRawId() + 1);
         growthNote.setOperationType(GrowthNote.OperationType.CREATE);
         growthNote.setAuthor(userId);
@@ -66,7 +65,6 @@ public class GrowthNoteController {
 
     @RequestMapping(value = "/{userId}/growthNotes/my/{rawId}", method = RequestMethod.PUT)
     public ResponseEntity<Map<String, String>> update(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
-        growthNote.setId(null);
         growthNote.setOperationType(GrowthNote.OperationType.UPDATE);
         growthNoteRepository.save(growthNote);
         Map<String, String> body = new HashMap<>();
