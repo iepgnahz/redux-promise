@@ -40,15 +40,13 @@ public class GrowthNoteController {
     }
 
     @RequestMapping(value = "/{userId}/growthNotes/my/{rawId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Map<String, String>> delete(@PathVariable int userId, @PathVariable int rawId) {
+    public ResponseEntity<String> delete(@PathVariable int userId, @PathVariable int rawId) {
         GrowthNote lastGrowthNote = growthNoteRepository.findByRawIdAndAuthor(userId, rawId);
         entityManager.detach(lastGrowthNote);
         lastGrowthNote.setOperationType(GrowthNote.OperationType.DELETE);
         lastGrowthNote.setId(null);
-        lastGrowthNote = growthNoteRepository.save(lastGrowthNote);
-        Map<String, String> body = new HashMap<>();
-        body.put("uri", "/api/users/" + userId + "/growthNotes/" + lastGrowthNote.getId());
-        return new ResponseEntity<>(body, HttpStatus.NO_CONTENT);
+        growthNoteRepository.save(lastGrowthNote);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/{userId}/growthNotes/my", method = RequestMethod.POST)
@@ -59,15 +57,14 @@ public class GrowthNoteController {
         growthNote.setAuthor(userId);
         growthNote = growthNoteRepository.save(growthNote);
         Map<String, String> body = new HashMap<>();
-        body.put("uri", "/api/users/" + userId + "/growthNotes/" + growthNote.getId());
+        body.put("uri", "/api/users/" + userId + "/growthNotes/my/" + growthNote.getId());
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{userId}/growthNotes/my/{rawId}", method = RequestMethod.PUT)
-    public ResponseEntity<Map<String, String>> update(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
+    public ResponseEntity<String> update(@PathVariable int userId, @RequestBody GrowthNote growthNote) {
         growthNote.setOperationType(GrowthNote.OperationType.UPDATE);
         growthNoteRepository.save(growthNote);
-        Map<String, String> body = new HashMap<>();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
