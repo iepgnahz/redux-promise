@@ -1,18 +1,25 @@
 import constant from '../constant/status';
-const startRequest = () => ({type: 'FETCH_REQUEST', status: constant.START});
-const successRequest = () => ({type: 'FETCH_REQUEST', status: constant.SUCCESS});
-const errorRequest = () => ({type: 'FETCH_REQUEST', status: constant.ERROR});
+import {createAction, handleActions, combineActions} from 'redux-actions';
 
-export const fetchRequest = () => {
-    return dispatch => {
+// export const fetchRequest = createAction("FETCH_REQUEST", () => (async () => {
+//     let value = await fetchRequestPromise;
+//     return {value};
+// })());
+
+export const fetchRequest = () => ({
+    type: "FETCH_REQUEST",
+    payload: fetchRequestPromise().then(result => ({value: result}))
+});
+
+
+export const fetchRequestPromise = () => new Promise((resolve, reject) => {
         const time = Math.random();
-        dispatch(startRequest());
-        setTimeout(() => {
+        return setTimeout(() => {
             console.log("the face time  is :", time);
             if (time > 0.5) {
-                return dispatch(errorRequest());
+                return resolve("error");
             }
-            return dispatch(successRequest());
-        }, time * 1000);
+            return resolve("success");
+        }, time * 1000)
     }
-};
+);

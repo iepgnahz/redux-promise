@@ -16,6 +16,7 @@ class App extends Component {
     }
 }
 
+
 const mapStateToProps = state => ({requestStatus: state.requestStatus});
 const mapDispatchToProps = dispatch => ({
     startRequest: () => dispatch(actions.fetchRequest())
