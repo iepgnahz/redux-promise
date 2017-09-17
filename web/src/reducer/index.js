@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
-import growthNotes from './growthNotes';
+import requestStatus from './requestStatus';
 
 export default combineReducers({
-    growthNotes
+    requestStatus
 });

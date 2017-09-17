@@ -8,7 +8,6 @@ import reducer from './reducer';
 import App from './component/App';
 import registerServiceWorker from './registerServiceWorker';
 
-import './style/index.css';
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
